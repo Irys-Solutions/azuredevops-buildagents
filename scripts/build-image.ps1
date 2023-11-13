@@ -57,6 +57,7 @@ packer build    -var "client_id=$ClientId" `
                 -var "managed_image_name=$ImageType-$ResourcesNamePrefix" `
                 -var "managed_image_resource_group_name=$ResourceGroup" `
                 -color=false `
+                -debug `
                 -on-error=ask `
                 $TemplatePath `
         | Foreach-Object { 
