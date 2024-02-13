@@ -16,7 +16,7 @@ parameters:
   - name: variable_group_name
     displayName: Variable Group
     type: string
-    default: 'Image Generation Variables'
+    default: BuildAgents
   - name: runner_images_version
     displayName: Runner-Images Version
     type: string
