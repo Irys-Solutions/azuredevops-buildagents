@@ -165,6 +165,7 @@ stages:
               set -e
               set -x
               cd runner-images/images/ubuntu
+              ls -al toolsets assets/post-gen scripts/build
               # Modify toolset expected version for postgres
               patch << 'EOF'
               --- toolsets/toolset-2204.json
