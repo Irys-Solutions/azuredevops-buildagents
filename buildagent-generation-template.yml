@@ -98,6 +98,10 @@ stages:
 
           - # noinspection SpellCheckingInspection
             script: | # Add install-vita-apt-packages.sh to ubuntu assets and build
+              # v--- IMPORTANT NOTE ---v
+              # NOTE: Changes here should be reflected into:
+              # https://github.com/Irys-Solutions/vita/blob/main/bin/setup-apt.sh
+              # ^--- IMPORTANT NOTE ---^
               set -e
               set -x
               cd runner-images/images/ubuntu
