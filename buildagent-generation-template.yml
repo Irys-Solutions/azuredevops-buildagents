@@ -167,7 +167,7 @@ stages:
               cd runner-images/images/ubuntu
               # Modify toolset expected version for postgres
               patch << 'EOF'
-              --- toolsets/toolset-2204.json.orig
+              --- toolsets/toolset-2204.json
               +++ toolsets/toolset-2204.json
               @@ -374,3 +374,3 @@
                    "postgresql": {
