@@ -140,6 +140,7 @@ stages:
                 python3-pip \
                 python3-virtualenv \
                 redis-tools \
+                time \
                 wget \
                 yarnpkg \
                 zlib1g-dev \
@@ -155,7 +156,7 @@ stages:
               make -j "$(nproc)"
               sudo make altinstall
               cd
-              rm -rf /tmp/Python*
+              sudo rm -rf /tmp/Python*
 
             displayName: 'Add some apt packages'
 
