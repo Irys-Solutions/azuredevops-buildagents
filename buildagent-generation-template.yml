@@ -95,7 +95,70 @@ stages:
                   cd runner-images
                   git checkout ($latest_release.tag_name)
                 }
-          
+
+          - # noinspection SpellCheckingInspection
+            script: |
+              set -e
+              set -x
+              [ X"$(uname -s)"X = X"Linux"X ] || exit 0
+              sudo rm -f /etc/apt/sources.list.d/pgdg.list /etc/apt/sources.list.d/azure-cli.list
+              sudo apt-get update
+              sudo apt-get install wget lsb-release -y
+              sudo apt-get remove -y azure-cli || true
+              lsb_release -cs
+              wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc \
+                | sudo tee /etc/apt/trusted.gpg.d/pgdg.asc | sudo apt-key add -
+              echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs 2>/dev/null)-pgdg main" \
+                | sudo tee /etc/apt/sources.list.d/pgdg.list
+              wget -qO- https://packages.microsoft.com/keys/microsoft.asc \
+                | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc | sudo apt-key add -
+              echo "deb [arch=$(dpkg --print-architecture)] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" \
+                | sudo tee /etc/apt/sources.list.d/azure-cli.list
+              sudo apt-get update
+              # Note: includes all the dependencies for Python 3.8
+              sudo apt-get install \
+                azure-cli \
+                gettext \
+                git \
+                git-lfs \
+                jq \
+                moreutils \
+                nodejs \
+                build-essential \
+                curl \
+                libbz2-dev \
+                libffi-dev \
+                libgdbm-dev \
+                libncurses5-dev \
+                libnss3-dev \
+                libreadline-dev \
+                libsqlite3-dev \
+                libssl-dev \
+                postgresql-client \
+                procps \
+                python3 \
+                python3-pip \
+                python3-virtualenv \
+                redis-tools \
+                wget \
+                yarnpkg \
+                zlib1g-dev \
+                -y
+              sudo apt-get autoremove
+              which python3.8 && exit 0
+              cd /tmp
+              # Currently we are using Python 3.8 so we need to install it from source
+              curl -O https://www.python.org/ftp/python/3.8.18/Python-3.8.18.tgz
+              tar xzf Python-3.8.18.tgz
+              cd Python-3.8.18
+              ./configure --enable-optimizations
+              make -j "$(nproc)"
+              sudo make altinstall
+              cd
+              rm -rf /tmp/Python*
+
+            displayName: 'Add some apt packages'
+
           - task: PowerShell@2
             name: setVars
             displayName: 'Set image template variables'
