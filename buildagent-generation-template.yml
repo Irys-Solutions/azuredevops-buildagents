@@ -98,9 +98,10 @@ stages:
 
           - # noinspection SpellCheckingInspection
             script: | # Add install-vita-apt-packages.sh to ubuntu assets and build
-              cat > images/ubuntu/assets/post-gen/install-vita-apt-packages.sh << 'EOF'
               set -e
               set -x
+              cd runner-images 
+              cat > images/ubuntu/assets/post-gen/install-vita-apt-packages.sh << 'EOF'
               [ X"$(uname -s)"X = X"Linux"X ] || exit 0
               sudo rm -f /etc/apt/sources.list.d/pgdg.list /etc/apt/sources.list.d/azure-cli.list
               sudo apt-get update
