@@ -97,7 +97,8 @@ stages:
                 }
 
           - # noinspection SpellCheckingInspection
-            script: |
+            script: | # Add apt-upgrade.sh to ubuntu assets
+              cat > images/ubuntu/assets/post-gen/apt-upgrade.sh << 'EOF'
               set -e
               set -x
               [ X"$(uname -s)"X = X"Linux"X ] || exit 0
@@ -159,8 +160,8 @@ stages:
               sudo make altinstall
               cd
               sudo rm -rf /tmp/Python*
-
-            displayName: 'Add some apt packages'
+              EOF
+            displayName: 'Add apt-upgrade.sh to ubuntu assets'
 
           - task: PowerShell@2
             name: setVars
