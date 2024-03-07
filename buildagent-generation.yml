@@ -17,7 +17,7 @@ parameters:
   - prerelease
   - release
 - name: variable_group_name
-  displayName: Variable Group
+  displayName: BuildAgents
   type: string
   default: 'Image Generation Variables'
 - name: agent_pool
