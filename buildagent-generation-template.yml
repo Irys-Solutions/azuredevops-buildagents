@@ -67,7 +67,8 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                $GitHubOwner = 'actions'
+                # $GitHubOwner = 'actions'
+                $GitHubOwner = 'Irys-Solutions'
                 $RepoName = 'runner-images'
 
                 if (Test-Path ".\$RepoName\") { Remove-Item -Recurse -Force ".\$RepoName\" }
