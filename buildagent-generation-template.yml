@@ -187,28 +187,6 @@ stages:
             displayName: 'Patch runner-images'
 
           - task: PowerShell@2
-            name: buildVm
-            displayName: "Build VM"
-            inputs:
-              targetType: filePath
-              filePath: ./runner-images/images.CI/linux-and-win/build-image.ps1
-              arguments: -ClientId $(CLIENT_ID) `
-                -ClientSecret $(CLIENT_SECRET) `
-                -TemplatePath $(TemplatePath) `
-                -ImageName "$(ManagedImageName)" `
-                -ImageResourceGroupName $(AZURE_RESOURCE_GROUP) `
-                -TempResourceGroupName "$(TempResourceGroupName)" `
-                -SubscriptionId $(AZURE_SUBSCRIPTION) `
-                -TenantId $(AZURE_TENANT) `
-                -Location $(AZURE_LOCATION) `
-                -VirtualNetworkName $(BUILD_AGENT_VNET_NAME) `
-                -VirtualNetworkRG $(BUILD_AGENT_VNET_RESOURCE_GROUP) `
-                -VirtualNetworkSubnet $(BUILD_AGENT_SUBNET_NAME)
-            env:
-              PACKER_LOG: 1
-              PACKER_LOG_PATH: "$(Agent.TempDirectory)/packer-log.txt"
-
-          - task: PowerShell@2
             name: setVars
             displayName: 'Set image template variables'
             inputs:
@@ -271,6 +249,28 @@ stages:
                 } else {
                   Write-Host "##[section] Patch not applied as $(TemplatePath) is not a Windows template"
                 }
+
+          - task: PowerShell@2
+            name: buildVm
+            displayName: "Build VM"
+            inputs:
+              targetType: filePath
+              filePath: ./runner-images/images.CI/linux-and-win/build-image.ps1
+              arguments: -ClientId $(CLIENT_ID) `
+                -ClientSecret $(CLIENT_SECRET) `
+                -TemplatePath $(TemplatePath) `
+                -ImageName "$(ManagedImageName)" `
+                -ImageResourceGroupName $(AZURE_RESOURCE_GROUP) `
+                -TempResourceGroupName "$(TempResourceGroupName)" `
+                -SubscriptionId $(AZURE_SUBSCRIPTION) `
+                -TenantId $(AZURE_TENANT) `
+                -Location $(AZURE_LOCATION) `
+                -VirtualNetworkName $(BUILD_AGENT_VNET_NAME) `
+                -VirtualNetworkRG $(BUILD_AGENT_VNET_RESOURCE_GROUP) `
+                -VirtualNetworkSubnet $(BUILD_AGENT_SUBNET_NAME)
+            env:
+              PACKER_LOG: 1
+              PACKER_LOG_PATH: "$(Agent.TempDirectory)/packer-log.txt"
 
           - task: PowerShell@2
             displayName: 'Copy image artifacts to the separate directory'
