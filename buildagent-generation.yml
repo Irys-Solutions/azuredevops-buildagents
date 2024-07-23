@@ -33,7 +33,18 @@ parameters:
   - galleryvm
   - vmss
 
-trigger: none
+schedules:
+- cron: '41 12 * * 0' # Run every Sun at T12:41Z (Australia/Melbourne is +10 or +11 from there)
+  displayName: Nightly build
+  branches:
+    include:
+      - main
+  always: true
+
+trigger:
+  branches:
+    include:
+      - main
 
 stages:
 - template: buildagent-generation-template.yml
