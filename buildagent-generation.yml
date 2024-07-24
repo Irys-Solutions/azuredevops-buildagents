@@ -34,7 +34,7 @@ parameters:
   - vmss
 
 schedules:
-- cron: '41 12 * * 0' # Run every Sun at T12:41Z (Australia/Melbourne is +10 or +11 from there)
+- cron: '41 12 * * 3' # Run every Wed at T12:41Z (Australia/Melbourne is +10 or +11 from there)
   displayName: Nightly build
   branches:
     include:
