@@ -33,13 +33,13 @@ parameters:
   - galleryvm
   - vmss
 
-schedules:
-- cron: '41 12 * * 3' # Run every Wed at T12:41Z (Australia/Melbourne is +10 or +11 from there)
-  displayName: Nightly build
-  branches:
-    include:
-      - main
-  always: true
+#schedules:
+#- cron: '41 12 * * 3' # Run every Wed at T12:41Z (Australia/Melbourne is +10 or +11 from there)
+#  displayName: Nightly build
+#  branches:
+#    include:
+#      - main
+#  always: true
 
 trigger:
   branches:
